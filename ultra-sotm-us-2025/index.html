@@ -4,9 +4,18 @@
     <title>Making maps with Ultra | SOTM US 2025</title>
     <meta charset="utf-8">
     <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      @font-face{
+        font-family: 'Droid Serif';
+        src: url('./assets/DroidSerif.ttf');
+      }
+      @font-face{
+        font-family: 'Yanone Kaffeesatz';
+        src: url('./assets/YanoneKaffeesatz-Regular.ttf');
+      }
+      @font-face{
+        font-family: 'Ubuntu Mono';
+        src: url('./assets/UbuntuMono-Regular.ttf');
+      }
 
       body { font-family: 'Droid Serif', serif; }
       h1, h2, h3 {
@@ -17,6 +26,23 @@
       table, th, td {
         border: 1px solid black;
         border-collapse: collapse;
+      }
+      kbd {
+        background-color: #eee;
+        border-radius: 3px;
+        border: 1px solid #b4b4b4;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+        color: #333;
+        display: inline-block;
+        font-size: 0.85em;
+        font-family: "Ubuntu Mono", monospace;
+        font-weight: 700;
+        line-height: 1;
+        padding: 2px 4px;
+        white-space: nowrap;
+      }
+      .remark-slide-number {
+        background: white;
       }
     </style>
   </head>
@@ -31,18 +57,169 @@ class: center, middle
 ### Daniel Schep
 
 ---
-# Agenda
+### Introduction <span style="font-size: .5em">overpass-turbo.eu</span>
+<img style="vertical-align: middle" src="./assets/leaflet.svg" width="40%">
+<span style="font-size: 3em"> + MapCSS</span>
 
-1. Introduction
-2. Deep-dive
-3. ...
+<img src="./assets/turbo1.png" width="45%">
+<img src="./assets/turbo2.png" width="45%">
+---
+### Introduction <span style="font-size: .5em">overpass-ultra.us</span>
+<img style="vertical-align: middle" src="./assets/maplibre.png" width="50%">
+
+<img src="./assets/heatmap.png" width="45%">
+<img src="./assets/bus-stops-glowing.png" width="45%">
+---
+### Performance <span style="font-size: .5em">overpass turbo</span>
+
+<video width="100%" controls>
+  <source src="./assets/turbo.webm"/>
+</video>
+---
+### Performance <span style="font-size: .5em">Ultra</span>
+
+<video width="100%" controls>
+  <source src="./assets/ultra.webm"/>
+</video>
+
+---
+### Styling <span style="font-size: .5em">Overpass turbo - MapCSS</span>
+
+<img src="./assets/overpass-turbo.png" width="100%">
+---
+### Styling <span style="font-size: .5em">Ultra - MapLibre</span>
+
+<img src="./assets/ultra-comparison.png" width="100%">
+---
+### Styling <span style="font-size: .5em"> differences with MapLibre style spec</span>
+
+* No need to specify `source` when styling query result
+* Extend existing `style.json`
+      ```
+      style:
+        extends: https://tiles.openfreemap.org/styles/liberty
+        layers:
+          ...
+      ```
+* YAML, including support for anchors
+      ```
+      circle-color: &color red
+      circle-stroke-color: *color
+      ```
+* `paint` &amp; `layout` keys at layer root
+      
+      ```
+      - type: circle
+        paint:
+          circle-color: red
+      ```
+      vs
+      
+      ```
+      - type: circle
+        circle-color: red
+      ```
+---
+### Styling <span style="font-size: .5em">Vector style benefits</span>
+
+* Symbol collision
+* Sandwich layers
+
+<img src="./assets/bike-lanes.png" width="100%">
 
 ---
 
-# Introduction
+### Styling <span style="font-size: .5em">Bundled Icons</style>
+
+<div style="float:right;width:66%;">
+    <h4 style="margin-top:0;margin-bottom:.5em;">Noto Emojis <small>ex: <code>emoji:pizza</code></small></h4>
+    <img style="width: 110%;" src="./assets/emoji.png">
+</div>
+
+<h4 style="margin-top:0;margin-bottom:.5em;">Maki <small>ex: <code>maki:hospital</code></small></h4>
+<img style="width: 18%;" src="./assets/maki.png">
+<h4 style="margin-top:0;margin-bottom:.5em;">Temaki <small>ex: <code>temaki:donut</code></small></h4>
+<img style="width: 28.6%;" src="./assets/temaki.png">
+
+---
+### Beyond Overpass <span style="font-size: .5em">query providers</span>
+
+<div style="float:right">
+<code>+</code> default provider.
+<br><code>*</code> detected by <code>auto</code> provider.
+</div>
+<ul>
+<li><code>auto+</code></li>
+<li><code>overpass*</code></li>
+<li><code>postpass</code></li>
+<li><code>ohsome</code></li>
+<li><code>sparql</code></li>
+<li><code>qlever</code></li>
+<li><code>sophox</code></li>
+<li><code>geojson*</code></li>
+<li><code>kml*</code></li>
+<li><code>gpx*</code></li>
+<li><code>tcx*</code></li>
+<li><code>osmxml*</code></li>
+<li><code>osmjson*</code></li>
+<li><code>esri*</code></li>
+<li><code>raster*</code></li>
+<li><code>vector*</code></li>
+<li><code>raw*</code></li>
+<li><code>osmWebsite*</code></li>
+<li><code>osmWiki*</code></li>
+<li><code>taginfo*</code></li>
+</ul>
+
+---
+### Beyond Overpass <span style="font-size: .5em">planet-scale queries with QLever</span>
+
+
+<video width="100%" controls>
+  <source src="./assets/qlever.webm"/>
+</video>
+---
+### Beyond Overpass <span style="font-size: .5em">Esri MapServer/FeatureServer</span>
+
+
+<img src="./assets/esri-featureserver.png" width="100%">
+
+          
+---
+
+### Transforms
+
+Use custom javascript and libraries like Turf.js to transform query results.
+
+<img style="width:100%" src="./assets/transform.png">
+
+---
+     
+### What's next?
+
+<br><br><br>
+      
+* Export to HTML
+* A `ReloadControl`
+
+---
+     
+### That's all folks!
+
+<br><br><br>
+      
+* Use it: [overpass-ultra.us](https://overpass-ultra.us)
+* Documentation: [overpass-ultra.us/docs](https://overpass-ultra.us/docs)
+* These slides: [slides.schep.me/ultra-sotm-us-2025](https://slides.schep.me/ultra-sotm-us-2025/)
+* Source code: [gitlab.com/trailstash/ultra](https://gitlab.com/trailstash/ultra)
+* Contact me:
+  * <a href="https://osmus.slack.com/team/U04AYHWCY3A"><kbd>@Daniel Schep</kbd></a> on OSM US Slack
+  * <a href="https://mastodon.social/@dschep"><kbd>@dschep@mastodon.social</kbd></a> on Mastodon
+  * <a href="https://bsky.app/profile/trailsta.sh"><kbd>@trailsta.sh</kbd></a> on Bluesky
+
 
     </textarea>
-    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    <script src="./assets/remark-latest.min.js">
     </script>
     <script>
       var slideshow = remark.create();
