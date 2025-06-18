@@ -35,6 +35,7 @@ jobs:
         uses: gacts/directory-listing@v1
         with:
           target: .
+          ignore: Makefile,template
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
