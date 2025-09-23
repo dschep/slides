@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add a map to your webpage for cheap | RVA SDUG Sept 2025</title>
+    <meta charset="utf-8">
+    <style>
+      @font-face{
+        font-family: 'Droid Serif';
+        src: url('./assets/DroidSerif.ttf');
+      }
+      @font-face{
+        font-family: 'Yanone Kaffeesatz';
+        src: url('./assets/YanoneKaffeesatz-Regular.ttf');
+      }
+      @font-face{
+        font-family: 'Ubuntu Mono';
+        src: url('./assets/UbuntuMono-Regular.ttf');
+      }
+
+      body { font-family: 'Droid Serif', serif; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz', sans-serif;
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono', monospace; }
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      kbd {
+        background-color: #eee;
+        border-radius: 3px;
+        border: 1px solid #b4b4b4;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+        color: #333;
+        display: inline-block;
+        font-size: 0.85em;
+        font-family: "Ubuntu Mono", monospace;
+        font-weight: 700;
+        line-height: 1;
+        padding: 2px 4px;
+        white-space: nowrap;
+      }
+      .remark-slide-number {
+        background: white;
+      }
+      a:visited {
+        color: blue;
+      }
+    </style>
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle
+
+# How to add a map to your website without paying Google or Mapbox $$$$$$
+
+### Daniel Schep
+
+---
+class: middle
+### Google Maps - The big dog
+
+Cost continues to go up 📈
+
+$5740/mo for 1mil map loads
+---
+class: middle
+### Mapbox - Not so much an underdog
+
+$3050/mo for 1mil map loads
+---
+class: middle
+### OpenStreetMap
+
+* Free data
+* Community driven
+* Plenty of corporate usage
+    * Mapbox's primary data-source
+    * Lyft &amp; Amazon
+    * Outdoor recreation
+* <span style="color:red">NO</span> commercial map service
+---
+class: middle
+### What's in a web map?
+
+<img style="float:right" src="./assets/tiles.png">
+
+* JavaScript client library
+* (Vector) Map Tiles
+* Style
+    * layers
+    * fonts
+    * sprites
+---
+class: middle
+### MapLibre
+* Fork of final OpenSource Mapbox libraries
+* Web and Native libraries
+---
+class: middle
+### OpenFreeMap
+* Free for all use
+* OpenMapTiles tile schema &amp; styles
+* No limitations*
+
+<small>* if usage isn't insane</small>
+---
+class: middle
+### Let's put a map on a webpage!
+```javascript
+<script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
+```
+
+```javascript
+<div id="map" style="width: 100%; height: 500px"></div>
+<script>
+  const map = new maplibregl.Map({
+    style: 'https://tiles.openfreemap.org/styles/liberty',
+    center: [-77.46323,37.54989],
+    zoom: 9.5,
+    container: 'map',
+  })
+</script>
+```
+---
+class: middle
+### Let's put a map on a webpage!
+<div id="map" style="width: 100%; height: 500px"></div>
+---
+class: middle
+### PMTiles - Cloud-Native Vector Tiles
+* Single-file tiled archive of a world map - ~100GB
+* Access individual tiles with HTTP <kbd>Range</kbd> requests
+---
+class: middle
+### Self-Hosting!
+* Protomaps
+    * Same creator as PMTiles
+    * Ready-made tiles and styles
+    * Cost for 1mil monthly map loads:
+        * on AWS - 189.77 USD per month
+        * on Cloudflare - 14.33 USD per month
+* OpenMapTiles
+    * Download PMTiles from Tuiles en Liberté [tuiles.enliberte.fr](https://tuiles.enliberte.fr)
+* OpenFreeMap
+    * Server-full solution
+    * SquashFS archives available to download
+---
+### That's all folks!
+
+<br><br><br>
+      
+* MapLibre: [maplibre.org](https://maplibre.org)
+* OpenFreeMap: [openfreemap.org](https://openfreemap.org)
+* Protomaps: [protomaps.com](https://protomaps.com)
+* Tuiles en Liberté: [tuiles.enliberte.fr](https://tuiles.enliberte.fr)
+* These slides: [slides.schep.me/add-a-map-rva-sdug-09-2025](https://slides.schep.me/add-a-map-to-your-webpage-rva-sdug-09-2025/)
+* Contact me:
+  * <kbd>@Daniel Schep</kbd> on RVA Dev Slack
+  * <a href="https://mastodon.social/@dschep"><kbd>@dschep@mastodon.social</kbd></a> on Mastodon
+  * <a href="https://bsky.app/profile/trailsta.sh"><kbd>@trailsta.sh</kbd></a> on Bluesky
+
+
+    </textarea>
+    <script src="./assets/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+      const map = new maplibregl.Map({
+          style: 'https://tiles.openfreemap.org/styles/liberty',
+          center: [-77.46323,37.54989],
+          zoom: 9.5,
+          container: 'map',
+      })
+    </script>
+  </body>
+</HTML>
