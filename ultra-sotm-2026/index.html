@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Making maps with Ultra | SOTM 2026</title>
+    <meta charset="utf-8">
+    <style>
+      @font-face{
+        font-family: 'Droid Serif';
+        src: url('./assets/DroidSerif.ttf');
+      }
+      @font-face{
+        font-family: 'Yanone Kaffeesatz';
+        src: url('./assets/YanoneKaffeesatz-Regular.ttf');
+      }
+      @font-face{
+        font-family: 'Ubuntu Mono';
+        src: url('./assets/UbuntuMono-Regular.ttf');
+      }
+
+      body { font-family: 'Droid Serif', serif; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz', sans-serif;
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono', monospace; }
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+      kbd {
+        background-color: #eee;
+        border-radius: 3px;
+        border: 1px solid #b4b4b4;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+        color: #333;
+        display: inline-block;
+        font-size: 0.85em;
+        font-family: "Ubuntu Mono", monospace;
+        font-weight: 700;
+        line-height: 1;
+        padding: 2px 4px;
+        white-space: nowrap;
+      }
+      .remark-slide-number {
+        background: white;
+      }
+      a:visited {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+background-image: url(./assets/cover.png)
+background-size: cover
+class: center, middle
+
+# Making maps with <span style="font-weight:bold;font-family:sans-serif;">Ultra <img src="./assets/logo.png" style="vertical-align:middle;height:1.25em;"></span>
+
+### Daniel Schep
+
+---
+### Introduction <span style="font-size: .5em">overpass-turbo.eu</span>
+<img style="vertical-align: middle" src="./assets/leaflet.svg" width="40%">
+<span style="font-size: 3em"> + MapCSS</span>
+
+<img src="./assets/turbo1.png" width="45%">
+<img src="./assets/turbo2.png" width="45%">
+---
+### Introduction <span style="font-size: .5em">overpass-ultra.us</span>
+<img style="vertical-align: middle" src="./assets/maplibre.png" width="50%">
+
+<img src="./assets/heatmap.png" width="45%">
+<img src="./assets/bus-stops-glowing.png" width="45%">
+---
+### Performance <span style="font-size: .5em">overpass turbo</span>
+
+<video width="100%" controls>
+  <source src="./assets/turbo.webm"/>
+</video>
+---
+### Performance <span style="font-size: .5em">Ultra</span>
+
+<video width="100%" controls>
+  <source src="./assets/ultra.webm"/>
+</video>
+
+---
+### Styling <span style="font-size: .5em">Overpass turbo - MapCSS</span>
+
+<img src="./assets/overpass-turbo.png" width="100%">
+---
+### Styling <span style="font-size: .5em">Ultra - MapLibre</span>
+
+<img src="./assets/ultra-comparison.png" width="100%">
+---
+### Styling <span style="font-size: .5em"> differences with MapLibre style spec</span>
+
+* No need to specify layer `source` when styling query result
+* No need to specify layer `id`
+* Extend existing `style.json`
+      ```
+      style:
+        extends: https://tiles.openfreemap.org/styles/liberty
+        layers:
+          ...
+      ```
+* YAML, including support for anchors
+      ```
+      circle-color: &color red
+      circle-stroke-color: *color
+      ```
+* `paint` &amp; `layout` keys at layer root
+      
+      ```
+      - type: circle
+        paint:
+          circle-color: red
+      ```
+      vs
+      
+      ```
+      - type: circle
+        circle-color: red
+      ```
+---
+### Styling <span style="font-size: .5em">Vector style benefits</span>
+
+* Symbol collision
+* Sandwich layers
+
+<img src="./assets/bike-lanes.png" width="100%">
+
+---
+
+### Styling <span style="font-size: .5em">Bundled Icons</style>
+
+<table style="margin:auto;text-align:center;">
+    <tr>
+        <td height="200" width="200">
+            <h4>Pinhead</h4>
+            <img height="50" width="50" src="./assets/pinhead.svg"/>
+        </td>
+        <td height="200" width="200">
+            <h4>Emoji</h4>
+            <img height="50" width="50" src="./assets/noto.svg"/>
+        </td>
+    </tr>
+    <tr>
+        <td height="200" width="200">
+            <h4>Maki</h4>
+            <img height="50" width="50" src="./assets/maki.svg"/>
+        </td>
+        <td height="200" width="200">
+            <h4>Temaki</h4>
+            <img height="50" width="50" src="./assets/temaki.svg"/>
+        </td>
+    </tr>
+</table>
+
+---
+
+### Styling <span style="font-size: .5em">Bundled Icons - Example</style>
+
+<img style="width: 110%;" src="./assets/emoji-map.png">
+---
+
+<div style="float:right">
+    <img src="./assets/pinhead-js-examples/cafe-black-stroke.svg"/>
+    <img src="./assets/pinhead-js-examples/bike-circle-green.svg"/>
+    <img src="./assets/pinhead-js-examples/jeep-map_pin-stroke-1.svg"/>
+    <img src="./assets/pinhead-js-examples/cargobike-square-blue.svg"/>
+    <img src="./assets/pinhead-js-examples/burger-marker.svg"/>
+    <img src="./assets/pinhead-js-examples/sun-square-yellow.svg"/>
+    <img src="./assets/pinhead-js-examples/plane-square-navy.svg"/>
+    <img src="./assets/pinhead-js-examples/ice_cream-circle-pink.svg"/>
+    <img src="./assets/pinhead-js-examples/beer-marker-amber.svg"/>
+    <img src="./assets/pinhead-js-examples/rocket-map_pin-purple.svg"/>
+    <img src="./assets/pinhead-js-examples/pizza-square-red.svg"/>
+    <img src="./assets/pinhead-js-examples/bus-circle-blue.svg"/>
+    <img src="./assets/pinhead-js-examples/camera-marker-darkgrey.svg"/>
+    <img src="./assets/pinhead-js-examples/tree-map_pin-green.svg"/>
+    <img src="./assets/pinhead-js-examples/tent-square-brown.svg"/>
+</div>
+### Styling <span style="font-size: .5em">Bundled Icons - Pinhead JS</style>
+
+Example: `icon-image: 'pinhead-js:cargobike?shape=square&shapeFill=#6486f5'`
+
+| Option         | Description                                                                                    | Default                                               |
+| :------------- | :--------------------------------------------------------------------------------------------- | :---------------------------------------------------- |
+| `cornerRadius` | Corner radius (applies to `square` only)                                                       | `4`                                                   |
+| `fill`         | Sets the fill color of the icon                                                                | `black` or `white` (auto-calculated from `shapeFill`) |
+| `padding`      | Internal padding between icon and shape edge                                                   | Varies by shape                                       |
+| `scale`        | Scale factor for the output SVG dimensions                                                     | `1`                                                   |
+| `shape`        | Background shape: `square`, `circle`, `map_pin`, `marker`, a raw SVG string, or a PNG data URI | `none`                                                |
+| `shapeFill`    | Fill color of the background shape                                                             | `black`                                               |
+| `stroke`       | Color of the stroke (applies to shape if present, otherwise icon)                              | Auto-calculated (contrasting or darkened/lightened)   |
+| `strokeWidth`  | Width of the stroke                                                                            | `1` for `marker`, else `0`                            |
+| `flip`         | Flip the icon: `horizontal` or `vertical`                                                      | `none`                                                |
+| `rotate`       | Rotate the icon                                                                                | `none`                                                |
+
+
+---
+
+### Styling <span style="font-size: .5em">Style Picker</style>
+
+<img style="width: 110%;" src="./assets/style-picker.png">
+---
+### Beyond Overpass <span style="font-size: .5em">query providers</span>
+
+<div style="float:right">
+<code>+</code> default provider.
+<br><code>*</code> detected by <code>auto</code> provider.
+</div>
+<ul>
+    <li><code>auto+</code></li>
+    <li><code>dsv*</code></li>
+    <li><code>duckdb</code></li>
+    <li><code>esri*</code></li>
+    <li><code>geojson*</code></li>
+    <li><code>gpx*</code></li>
+    <li><code>javascript</code></li>
+    <li><code>kml*</code></li>
+    <li><code>ohsome</code></li>
+    <li><code>osmjson*</code></li>
+    <li><code>osmWebsite*</code></li>
+    <li><code>osmWiki*</code></li>
+    <li><code>osmxml*</code></li>
+    <li><code>overpass*</code></li>
+    <li><code>postpass</code></li>
+    <li><code>qlever</code></li>
+    <li><code>raster*</code></li>
+    <li><code>raw*</code></li>
+    <li><code>sophox</code></li>
+    <li><code>sparql</code></li>
+    <li><code>taginfo*</code></li>
+    <li><code>tcx*</code></li>
+    <li><code>vector*</code></li>
+</ul>
+
+---
+### Beyond Overpass <span style="font-size: .5em">planet-scale queries with QLever</span>
+
+
+<video width="100%" controls>
+  <source src="./assets/qlever.webm"/>
+</video>
+---
+### Beyond Overpass <span style="font-size: .5em">DuckDB</span>
+
+<img src="./assets/duck.png" width="100%">
+---
+### Beyond Overpass <span style="font-size: .5em">Esri MapServer/FeatureServer</span>
+
+
+<img src="./assets/esri-featureserver.png" width="100%">
+
+          
+---
+
+### Transforms
+
+Use custom javascript and libraries like Turf.js to transform query results.
+
+<img style="width:100%" src="./assets/transform.png">
+
+---
+
+### Export to `style.json`
+
+Export your map as a MapLibre GL style for use on your own site or app.
+
+<img style="width:100%" src="./assets/export.png">
+
+---
+     
+### That's all folks!
+
+<br><br><br>
+      
+* Use it: [overpass-ultra.us](https://overpass-ultra.us)
+* Documentation: [overpass-ultra.us/docs](https://overpass-ultra.us/docs)
+* These slides: [slides.schep.me/ultra-sotm-2026](https://slides.schep.me/ultra-sotm-2026/)
+* Source code: [gitlab.com/trailstash/ultra](https://gitlab.com/trailstash/ultra)
+* Contact me:
+  * <a href="https://osmus.slack.com/team/U04AYHWCY3A"><kbd>@Daniel Schep</kbd></a> on OSM US Slack
+  * <a href="https://mastodon.social/@dschep"><kbd>@dschep@mastodon.social</kbd></a> on Mastodon
+  * <a href="https://bsky.app/profile/trailsta.sh"><kbd>@trailsta.sh</kbd></a> on Bluesky
+
+
+    </textarea>
+    <script src="./assets/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
