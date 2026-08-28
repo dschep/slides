@@ -279,6 +279,16 @@ Export your map as a MapLibre GL style for use on your own site or app.
 <img style="width:100%" src="./assets/example.png">
 
 ---
+
+### OSM XML/JSON parsing <span style="font-size: .5em">osm2geojson-ultra</span>
+
+* Fork of osm2geojson-lite
+* XML parsing replaced with TXML (lite has since changed it's parser too)
+* A single `Feature` per OSM element with "interesting" tags
+* Optimized for `out geom;`
+* Support geometry outputs from Overpass commands such as `local`, `convert`, and `make`
+
+---
      
 ### That's all folks!
 
